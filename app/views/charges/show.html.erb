@@ -1,0 +1,52 @@
+<div class="max-w-xl mx-auto p-6">
+  <h1 class="text-2xl font-bold mb-4">Cobrança #<%= @charge.id %></h1>
+
+  <div class="bg-white shadow rounded p-4 space-y-2">
+    <p><strong>Status:</strong> <%= @charge.status %></p>
+    <p><strong>Valor:</strong>  <%= @charge.amount_brl %></p>
+    <p><strong>Moeda:</strong> <%= @charge.currency %></p>
+    <p><strong>Descrição:</strong> <%= @charge.description %></p>
+    <p><strong>Idempotency Key:</strong> <%= @charge.idempotency_key %></p>
+    <p><strong>Provider ID:</strong> <%= @charge.provider_charge_id %></p>
+    <p><strong>Erro:</strong> <%= @charge.error_message %></p>
+  </div>
+
+  <div class="mt-6 space-y-4">
+
+  <% if @charge.succeeded? %>
+    <span class="inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
+      Pagamento concluído
+    </span>
+
+  <% elsif @charge.processing? %>
+    <span class="inline-block bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-semibold">
+      Processando...
+    </span>
+
+  <% elsif @charge.failed? %>
+    <div class="space-y-2">
+      <span class="inline-block bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-semibold">
+        Falhou
+      </span>
+
+      <%= button_to "Tentar novamente",
+          process_charge_charge_path(@charge),
+          method: :post,
+          class: "bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-medium transition" %>
+    </div>
+
+  <% else %>
+    <%= button_to "Processar cobrança",
+        process_charge_charge_path(@charge),
+        method: :post,
+        class: "bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-medium transition" %>
+  <% end %>
+
+  <div>
+    <%= link_to "Voltar",
+        charges_path,
+        class: "inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium transition" %>
+  </div>
+
+</div>
+</div>

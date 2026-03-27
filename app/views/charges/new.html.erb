@@ -1,0 +1,29 @@
+<div class="max-w-xl mx-auto p-6">
+  <h1 class="text-2xl font-bold mb-4">Nova cobrança</h1>
+
+  <%= form_with model: @charge do |f| %>
+    <div class="mb-4">
+      <%= f.label :amount_cents, "Valor (centavos)" %>
+      <%= f.number_field :amount_cents, class: "w-full border p-2 rounded" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :currency %>
+      <%= f.text_field :currency, value: "BRL", class: "w-full border p-2 rounded" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :description %>
+      <%= f.text_field :description, class: "w-full border p-2 rounded" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :idempotency_key %>
+      <%= f.text_field :idempotency_key, class: "w-full border p-2 rounded" %>
+      <p class="text-sm text-gray-500">Pode deixar em branco (UI gera automaticamente)</p>
+    </div>
+
+    <%= f.submit "Criar cobrança",
+        class: "bg-blue-600 text-white px-4 py-2 rounded" %>
+  <% end %>
+</div>
